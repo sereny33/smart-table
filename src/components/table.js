@@ -22,7 +22,15 @@ export function initTable(settings, onAction) {
         root.container.append(root[subName].container)
     })
 
-    // @todo: #1.3 —  обработать события и вызвать onAction()
+    // @DONE: #1.3 —  обработать события и вызвать onAction()
+
+    console.log(root.container)
+    root.container.addEventListener('change', () => onAction());
+    root.container.addEventListener('reset', () => setTimeout(onAction));
+    root.container.addEventListener('submit', (e) => {
+        e.preventDefault()
+        onAction(e.submitter);
+    });
 
     const render = (data) => {
         // @DONE: #1.1 — преобразовать данные в массив строк на основе шаблона rowTemplate
