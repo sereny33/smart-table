@@ -24,10 +24,14 @@ function collectState() {
     const state = processFormData(new FormData(sampleTable.container));
     const rowsPerPage = parseInt(state.rowsPerPage);
     const page = parseInt(state.page ?? 1)
+    const totalFrom = parseFloat(state.totalFrom);
+    const totalTo = parseFloat(state.totalTo);
+    
     return {
         ...state,
         rowsPerPage,
-        page
+        page,
+        total: [totalFrom, totalTo]
     };
 }
 

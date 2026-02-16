@@ -22,11 +22,11 @@ export function initTable(settings, onAction) {
         root.container.append(root[subName].container)
     })
 
-    // @DONE: #1.3 —  обработать события и вызвать onAction()
+    // @todo: #1.3 —  обработать события и вызвать onAction()
     root.container.addEventListener('change', () => onAction());
     root.container.addEventListener('reset', () => setTimeout(onAction));
     root.container.addEventListener('submit', (e) => {
-        e.preventDefault()
+        e.preventDefault();
         onAction(e.submitter);
     });
 
