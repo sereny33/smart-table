@@ -32,7 +32,6 @@ export function initFiltering(elements, indexes) {
         }
 
         // @DONE: #4.5 — отфильтровать данные используя компаратор
-        console.log(state)
         return data.filter(row => compare(row, state)); 
     }
 }
