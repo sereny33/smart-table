@@ -47,10 +47,11 @@ async function render(action) {
     // result = applySearching(result, state, action);
     // result = applyFiltering(result, state, action);
     // result = applySorting(result, state, action);
-    // result = applyPagination(result, state, action);
+    query = applyPagination(query, state, action); // обновляем query
 
     const { total, items } = await api.getRecords(query) // получаем данные из api
 
+    updatePagination(total, query);
     sampleTable.render(items) // передаем полученные из api данные в таблицу
 
 }
@@ -63,7 +64,7 @@ const sampleTable = initTable({
 }, render);
 
 // @todo: инициализация
-const applyPagination = initPagination(
+const {applyPagination, updatePagination} = initPagination(
     sampleTable.pagination.elements,                // передаём сюда элементы пагинации, найденные в шаблоне
     (el, page, isCurrent) => {                      // и колбэк, чтобы заполнять кнопки страниц данными
         const input = el.querySelector('input');
@@ -75,7 +76,7 @@ const applyPagination = initPagination(
     }
 );
 
-const applySorting = initSorting([                  // Нам нужно передать сюда массив элементов, которые вызывают сортировку, чтобы изменять их визуальное представление
+const applySorting = initSorting([ // Нам нужно передать сюда массив элементов, которые вызывают сортировку, чтобы изменять их визуальное представление
     sampleTable.header.elements.sortByDate,
     sampleTable.header.elements.sortByTotal
 ])
@@ -90,7 +91,7 @@ const appRoot = document.querySelector('#app');
 appRoot.appendChild(sampleTable.container);
 
 async function init() {
-    const indexes = await api.getIndexes() // получаем индексы из api
+    const indexes = await api.getIndexes(); // получаем индексы из api
 };
 
 init().then(render);
